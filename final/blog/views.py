@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 __author__ = 'Joeeeeee'
+=======
+﻿__author__ = 'Joeeeeee'
+>>>>>>> e7ecef75b4c43dd0673e484de26c5f4aaffd5ea4
 
 
 # Modules in my app

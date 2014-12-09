@@ -45,12 +45,16 @@ def update_user_info(user):
     return "success"
 
 
-def validate_user_by_phone(phone):
+def validate_user_by_phone(phone, password):
     try:
-        UserDAO.get_user_by_phone(phone)
+        user = UserDAO.get_user_by_phone(phone)
     except:
-        return  "error"
-    return "success"
+        return "error"
+
+    if user.password == password:
+        return user
+    else:
+        return "error"
 
 
 def sign_in(phone, password):

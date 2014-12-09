@@ -4,13 +4,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>mapblog</title>
-
-		<link rel="stylesheet" href="css/map.css" type="text/css" />
+        <meta charset="utf-8"/>
+        {% load staticfiles %}
+		<link rel="stylesheet" href="{% static 'css/map.css' %}" type="text/css" />
 
 		<script language="javascript" src="http://webapi.amap.com/maps?v=1.2&key=e5e55830541d0156b5d514b884dd9db1"></script>
-		<script language="JavaScript" src="js/jquery-latest.js"></script>
-		<script language="JavaScript" src="js/main_page.js"></script>
-		<script language="JavaScript" src="js/mapblog.js"></script>
+		<script language="JavaScript" src="{% static 'js/jquery-latest.js' %}"></script>
+		<script language="JavaScript" src="{% static 'js/main_page.js' %}"></script>
+		<script language="JavaScript" src="{% static 'js/mapblog.js' %}"></script>
 		<script>
 			 // 初始化地图
 			function initialize() {
@@ -26,16 +27,16 @@
 	<body onLoad="initialize()" id=home>
 		<div id="container">
 			<a onclick="showFriendList()">
-				<img id="showButton" src="img/open.png" />
+				<img id="showButton" src="{% static 'img/open.png' %}" />
 			</a>
 			<div id="friend_list" style="display: none;">
 				<input type="button" onclick="newBlog()" value="New Blog" class="button_orange" style="float:left;size: initial;" />
 				<a onclick="hideFriendList()">
-					<img id="closeButton" src="img/close2.png" / style="display: none;">
+					<img id="closeButton" src="{% static 'img/close2.png' %}" style="display: none;">
 				</a>
 				<ul id="list_fix">
 					<li id="list_info">
-						<img class="list_head" src="img/login.jpg" />
+						<img class="list_head" src="{% static 'img/login.png' %}" />
 						<span style="display: inline-block; font-size: 14px;">&nbsp;Joeeeee</span>
 						<br>
 						<span style="position: relative; top: 5px; font-size: 14px;">&nbsp;最后更新时间: 1分钟前</span>

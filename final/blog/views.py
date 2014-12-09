@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = 'Joeeeeee'
 
 
@@ -13,21 +14,18 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-
-
 '''
 实现简单的博客功能
 功能: 1、用户注册; 2、用户发博客; 3、用户查看自己发的博客;
 '''
 
-
-
 # Create your views here.
+
 
 # for test
 @csrf_exempt
 def helloworld(request):
-    return HttpResponse("helloworld")
+    return render(request, "RealMapBlog/login.html")
 
 
 @csrf_exempt
@@ -56,4 +54,16 @@ def register(request):
 
 @csrf_exempt
 def sign_in(request):
-    pass
+
+    # phone = request.POST['phone']
+    # password = request.POST['password']
+    #
+    # user = UserService.validate_user_by_phone(phone, password)
+    #
+    # if user == "error":
+    #     return HttpResponse(json.dumps({"result": 0}))
+    #
+    # else:
+    #     return HttpResponse("success")
+
+    return render(request, "RealMapBlog/index.html")

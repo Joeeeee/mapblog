@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>Sign in for mapblog</title>
+		
+		
+		<style type="text/css">
+		
+			body{margin:0px;}
+			
+			.bg {
+				/*background-image: url(images/login.png);*/
+				width:100%;
+				z-index: 0;
+			}
+			
+			div#content {position: absolute; 
+						background-color:#FFFFFC; 
+						height:212px;
+						width:350px; 
+						right:200px; 
+						top:200px; 
+						border-style:solid; 
+						border-color:#69F;
+						border-width:2px; 
+						border-radius: 10px;
+						}
+			.button {
+				background-image: url(img/signin.png);
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		<img class="bg" src="img/login.png" />
+		<div id="content">
+			<form action="/mapblog/check" method="post" enctype="multipart/form-data" name="login">
+				{%csrf_token%}
+				<table width="353">
+					<tr>
+						<td width="224">&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="30">
+							<input name="username" type="text" style="width:339px; height:30px;" />
+						</td>
+					</tr>
+					<tr>
+						<td height="80">
+							<input name="password" type="password" style="width:250px; height:30px;" />
+							<input type="submit" class="button" value="Sign in" style="width: 75px; height: 35px;" />
+						</td>
+					</tr>
+					<tr>
+						<td height="30">
+							<a href="#">
+								<input type="button" value="Sign up" style="width: 100px; height: 33px;">
+							</a>
+						</td>
+					</tr>
+				</table>
+
+			</form>
+
+		</div>
+	</body>
+
+</html>

@@ -23,8 +23,9 @@ def delete_user(user_id):
 def get_user_by_id(user_id):
     return User.objects.get(id=user_id)
 
-# print getUserById(1)
-
+def get_user_by_phone(user_phone):
+    return User.objects.get(userid=user_phone)
 
 def update_user(**kw):
     User.objects.filter(id=kw['id']).update(**kw)
+

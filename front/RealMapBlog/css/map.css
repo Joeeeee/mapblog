@@ -1,0 +1,98 @@
+html {
+	height: 100%
+}
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+#container {
+	height: 100%;
+	position: relative;
+}
+#friend_list {
+	position: absolute;
+	/*background-color: #6D6D62;*/
+	
+	background: #E5EECC;
+	height: 100%;
+	width: 16%;
+	z-index: 90;
+	border: solid;
+	border-color: #FFFFFC;
+}
+#showButton {
+	position: absolute;
+	height: 7%;
+	z-index: 90;
+}
+#closeButton {
+	position: absolute;
+	height: 4%;
+	left: 86%;
+}
+#name {
+	position: relative;
+	left: 10%;
+}
+#list_fix {
+	list-style: none;
+	-webkit-padding-start: 4px;
+	margin-top: 25%;
+}
+.list_head {
+	float: left;
+	height: 40px;
+	width: 40px;
+}
+#list_info {
+	margin-bottom: 10px;
+}
+#new_blog {
+	display: none;
+	position: absolute;
+	left: 30%;
+	width: 500px;
+	height: 200px;
+	margin-top: 10%;
+	background-color: #E5EECC;
+	z-index: 90;
+}
+#editor {
+	position: relative;
+	border: none;
+	width: 90%;
+	height: 50%;
+	font-size: 14px;
+	word-wrap: break-word;
+	line-height: 18px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	outline: none;
+	resize: none;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 8%;
+}
+#blog_send {
+	float: right;
+	height: 30px;
+	width: 80px;
+	background-color: #eb7350;
+	border-radius: 5px;
+	color: #FFFFFC;
+	border: none;
+	margin-right: 4%;
+	outline: none;
+	cursor: pointer;
+}
+.button_orange {
+	height: 30px;
+	width: 80px;
+	background-color: #6699FF;
+	border-radius: 5px;
+	color: #FFFFFC;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}

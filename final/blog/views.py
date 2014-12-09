@@ -1,4 +1,4 @@
-__author__ = 'Joeeeeee'
+﻿__author__ = 'Joeeeeee'
 
 
 # Modules in my app
@@ -27,6 +27,7 @@ import json
 # for test
 @csrf_exempt
 def helloworld(request):
+    a = "hello"
     return HttpResponse("helloworld")
 
 

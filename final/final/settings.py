@@ -61,7 +61,7 @@ WSGI_APPLICATION = 'final.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Mapblog',
+        'NAME': 'final',
         'USER': 'root',
         'PASSWORD': 'scut8711',
         'HOST': '',
@@ -87,5 +87,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/templates-files/
 
-STATIC_URL = '/templates/'
-STATIC_ROOT = os.path.join(SITE_ROOT, 'templates')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
+
+UPLOAD_PATH = os.path.join(SITE_ROOT, 'Upload')
+
+STATICFILES_DIRS = (
+    ("Upload", os.path.join(SITE_ROOT,'Upload')),
+)

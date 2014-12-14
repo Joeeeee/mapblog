@@ -11,19 +11,19 @@ import django
 django.setup()
 
 
+# basic operation
 def insert_blog(**blog):
-    b = Blog.objects.create(**blog)
-    return b
+    result = Blog.objects.create(**blog)
+    return result
 
 
 def delete_blog(blog_id):
-
     Blog.objects.get(id=blog_id).delete()
 
 
 def get_blog(blog_id):
-
-    return Blog.objects.get(id=blog_id)
+    result = Blog.objects.get(id=blog_id)
+    return result
 
 
 def update_blog(**blog):

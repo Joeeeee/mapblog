@@ -31,33 +31,7 @@ class User(models.Model):
                str(self.last_longitude) + ' ' + str(self.last_latitude) + ' ' + str(self.city)
 
 
-class Blog(models.Model):
-
-    content = models.CharField(max_length=300)
-
-    latitude = models.DecimalField(max_digits=10, decimal_places=3)
-
-    longitude = models.DecimalField(max_digits=10, decimal_places=3)
-
-    time = models.DateTimeField()
-
-    blog_comment_count = models.CharField(max_length=10, default="0")
-
-    blog_like_count = models.CharField(max_length=10, default="0")
-
-    userid = models.ForeignKey(User)
-
-    photoid = models.ForeignKey(Photo)
-
-    def __unicode__(self):
-        return str(self.id) + ' ' + str(self.content) + ' ' + str(self.latitude) + ' ' + str(self.longitude) + \
-               str(self.time) + ' ' + str(self.blog_comment_count) + ' ' + str(self.blog_like_count) + ' ' + \
-               str(self.userid) + ' ' + str(self.photoid)
-
-
 class Photo(models.Model):
-
-    blogid = models.ForeignKey(Blog)
 
     photo1 = models.CharField(max_length=100)
 
@@ -81,6 +55,30 @@ class Photo(models.Model):
         return str(self.id) + ' ' + str(self.blogid) + ' ' + str(self.photo1) + ' ' + str(self.photo2) + \
                str(self.photo3) + ' ' + str(self.photo4) + ' ' + str(self.photo5) + ' ' + str(self.photo6) + ' ' + \
                str(self.photo7) + ' ' + str(self.photo8) + ' ' + str(self.photo9)
+
+
+class Blog(models.Model):
+
+    content = models.CharField(max_length=300)
+
+    latitude = models.DecimalField(max_digits=10, decimal_places=3)
+
+    longitude = models.DecimalField(max_digits=10, decimal_places=3)
+
+    time = models.DateTimeField()
+
+    blog_comment_count = models.CharField(max_length=10, default="0")
+
+    blog_like_count = models.CharField(max_length=10, default="0")
+
+    userid = models.ForeignKey(User)
+
+    photoid = models.ForeignKey(Photo, null=True)
+
+    def __unicode__(self):
+        return str(self.id) + ' ' + str(self.content) + ' ' + str(self.latitude) + ' ' + str(self.longitude) + \
+               str(self.time) + ' ' + str(self.blog_comment_count) + ' ' + str(self.blog_like_count) + ' ' + \
+               str(self.userid) + ' ' + str(self.photoid)
 
 
 class Comment(models.Model):
@@ -135,7 +133,7 @@ class Addfriend(models.Model):
 
     userid = models.ForeignKey(User)
 
-    friendid = models.CharField(User)
+    friendid = models.CharField(max_length=5)
 
     date = models.DateTimeField()
 

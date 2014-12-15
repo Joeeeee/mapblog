@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
 __author__ = 'Joeeee'
 
-from blog.models import Groupmember
 
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "final.settings")
 
 import django
 django.setup()
+
+from blog.models import Groupmember
 
 
 # basic operation

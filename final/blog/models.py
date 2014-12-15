@@ -17,17 +17,17 @@ class User(models.Model):
 
     nickname = models.CharField(max_length=30)
 
-    age = models.CharField(max_length=3)
+    age = models.CharField(max_length=5, default="20")
 
     last_longitude = models.DecimalField(max_digits=10, decimal_places=7, null=True)
 
     last_latitude = models.DecimalField(max_digits=10, decimal_places=7, null=True)
 
-    city = models.CharField(max_length=10)
+    city = models.CharField(max_length=30, default="GUANGZHOUG")
 
     def __unicode__(self):
         return str(self.id) + ' ' + str(self.username) + ' ' + str(self.userid) + ' ' + str(self.password) + ' ' + \
-               str(self.sex) + ' ' + str(self.head) + ' ' + str(self.nickname) + ' ' + str(self.age) + ' ' + \
+               str(self.sex) + ' ' + str(self.head) + ' ' + str(self.nickname) + ' ' + \
                str(self.last_longitude) + ' ' + str(self.last_latitude) + ' ' + str(self.city)
 
 
@@ -105,6 +105,7 @@ class Message(models.Model):
 
     content = models.CharField(max_length=100)
 
+    # 1 represents addfriend, 2 represents comment
     type = models.CharField(max_length=5)
 
     isread = models.BooleanField(default=False)

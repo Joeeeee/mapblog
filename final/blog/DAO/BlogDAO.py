@@ -1,14 +1,13 @@
-__author__ = 'Joeeee'
-
 # -*- coding: utf-8 -*-
-
-from blog.models import Blog
+__author__ = 'Joeeee'
 
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "final.settings")
 
 import django
 django.setup()
+
+from blog.models import Blog
 
 
 # basic operation

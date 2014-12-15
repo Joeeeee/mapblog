@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Joeeeeee'
 
+__author__ = 'Joeeee'
 
 # Modules in my app
-from blog.Service import UserService
-from blog.Service import BlogService
-from auth.Httpsession import*
+from blog.Service import AddFriendService
+from auth import Httpsession
 
 
 # Modules in Django
@@ -28,42 +27,23 @@ def helloworld(request):
     return render(request, "RealMapBlog/login.html")
 
 
+# send an add friend request
 @csrf_exempt
-def register(request):
-    if request.method == 'GET':
-        phone = request.GET['phone']
+def addfriend(request):
 
-        # 验证用户手机号
+    if Httpsession.UserVerify(request):
+        # suppose POST method
+        # get data
+        user_id = request.POST['user_id']
+        receiver_id = request.POST['receiver_id']
 
-        if True:
-            return HttpResponse(json.dumps({"success": 1}))
-        if False:
-            return HttpResponse(json.dumps({"success": 0}))
+        result = AddFriendService.addfriend(user_id, receiver_id)
 
-    if request.method == 'POST':
-        phone = request.POST['phone']
-        password = request.POST['password']
-        username = request.POST['nickname']
-
-        # 插入数据库
-
-        if True:
-            return HttpResponse(json.dumps({"success": 1}))
-        if False:
-            return HttpResponse(json.dumps({"success": 0}))
-
-@csrf_exempt
-def sign_in(request):
-
-    # phone = request.POST['phone']
-    # password = request.POST['password']
-    #
-    # user = UserService.validate_user_by_phone(phone, password)
-    #
-    # if user == "error":
-    #     return HttpResponse(json.dumps({"result": 0}))
-    #
-    # else:
-    #     return HttpResponse("success")
-
-    return render(request, "RealMapBlog/index.html")
+        # only one kind of error, that is database error
+        if result == "fail":
+            return HttpResponse(json.dumps({"success": "0", "type": "0"}))
+        else:
+            return HttpResponse(json.dumps({"success": "1"}))
+    else:
+        # haven't been signed in
+        return HttpResponse(json.dumps({"success": "0", "type": "1"}))

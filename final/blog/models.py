@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 
 
@@ -13,7 +13,7 @@ class User(models.Model):
 
     sex = models.CharField(max_length=5, default="male")
 
-    head = models.CharField(max_length=100)
+    head = models.FileField(upload_to='./static/Upload/Head')
 
     nickname = models.CharField(max_length=30)
 
@@ -26,33 +26,33 @@ class User(models.Model):
     city = models.CharField(max_length=10)
 
     def __unicode__(self):
-        return str(self.id) + ' ' + str(self.username) + ' ' + str(self.userid) + ' ' + str(self.password) + \
+        return str(self.id) + ' ' + str(self.username) + ' ' + str(self.userid) + ' ' + str(self.password) + ' ' + \
                str(self.sex) + ' ' + str(self.head) + ' ' + str(self.nickname) + ' ' + str(self.age) + ' ' + \
                str(self.last_longitude) + ' ' + str(self.last_latitude) + ' ' + str(self.city)
 
 
 class Photo(models.Model):
 
-    photo1 = models.CharField(max_length=100)
+    photo1 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo2 = models.CharField(max_length=100)
+    photo2 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo3 = models.CharField(max_length=100)
+    photo3 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo4 = models.CharField(max_length=100)
+    photo4 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo5 = models.CharField(max_length=100)
+    photo5 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo6 = models.CharField(max_length=100)
+    photo6 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo7 = models.CharField(max_length=100)
+    photo7 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo8 = models.CharField(max_length=100)
+    photo8 = models.FileField(upload_to='./static/Upload/Photo')
 
-    photo9 = models.CharField(max_length=100)
+    photo9 = models.FileField(upload_to='./static/Upload/Photo')
 
     def __unicode__(self):
-        return str(self.id) + ' ' + str(self.blogid) + ' ' + str(self.photo1) + ' ' + str(self.photo2) + \
+        return str(self.id) + ' ' + str(self.blogid) + ' ' + str(self.photo1) + ' ' + str(self.photo2) + ' ' + \
                str(self.photo3) + ' ' + str(self.photo4) + ' ' + str(self.photo5) + ' ' + str(self.photo6) + ' ' + \
                str(self.photo7) + ' ' + str(self.photo8) + ' ' + str(self.photo9)
 
@@ -65,7 +65,7 @@ class Blog(models.Model):
 
     longitude = models.DecimalField(max_digits=10, decimal_places=3)
 
-    time = models.DateTimeField()
+    datetime = models.DateTimeField(default=datetime.datetime.now())
 
     blog_comment_count = models.CharField(max_length=10, default="0")
 
@@ -76,7 +76,7 @@ class Blog(models.Model):
     photoid = models.ForeignKey(Photo, null=True)
 
     def __unicode__(self):
-        return str(self.id) + ' ' + str(self.content) + ' ' + str(self.latitude) + ' ' + str(self.longitude) + \
+        return str(self.id) + ' ' + str(self.content) + ' ' + str(self.latitude) + ' ' + str(self.longitude) + ' ' + \
                str(self.time) + ' ' + str(self.blog_comment_count) + ' ' + str(self.blog_like_count) + ' ' + \
                str(self.userid) + ' ' + str(self.photoid)
 
@@ -85,7 +85,7 @@ class Comment(models.Model):
 
     blogid = models.ForeignKey(Blog)
 
-    date = models.DateTimeField()
+    datetime = models.DateTimeField(default=datetime.datetime.now())
 
     # 1 represents comment to blog, 2 represents comment to comment
     type = models.CharField(max_length=5, default="1")
@@ -135,7 +135,7 @@ class Addfriend(models.Model):
 
     friendid = models.CharField(max_length=5)
 
-    date = models.DateTimeField()
+    datetime = models.DateTimeField(default=datetime.datetime.now())
 
     def __unicode__(self):
         return str(self.id) + ' ' + str(self.userid) + ' ' + str(self.friendid) + ' ' + str(self.date)

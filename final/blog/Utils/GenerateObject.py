@@ -25,5 +25,3 @@ def todcit(model_name):
 
     return d
 
-# test
-# todcit("User")

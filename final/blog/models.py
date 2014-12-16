@@ -13,7 +13,7 @@ class User(models.Model):
 
     sex = models.CharField(max_length=5, default="male")
 
-    head = models.FileField(upload_to='./static/Upload/Head')
+    head = models.FileField(upload_to='Head')
 
     nickname = models.CharField(max_length=30)
 
@@ -23,7 +23,7 @@ class User(models.Model):
 
     last_latitude = models.DecimalField(max_digits=10, decimal_places=7, null=True)
 
-    city = models.CharField(max_length=30, default="GUANGZHOUG")
+    city = models.CharField(max_length=30, default="GUANGZHOU")
 
     def __unicode__(self):
         return str(self.id) + ' ' + str(self.username) + ' ' + str(self.userid) + ' ' + str(self.password) + ' ' + \
@@ -33,21 +33,21 @@ class User(models.Model):
 
 class Photo(models.Model):
 
-    photo1 = models.FileField(upload_to='./static/Upload/Photo')
+    photo1 = models.FileField(upload_to='Photo')
 
-    photo2 = models.FileField(upload_to='./static/Upload/Photo')
+    photo2 = models.FileField(upload_to='Photo')
 
-    photo3 = models.FileField(upload_to='./static/Upload/Photo')
+    photo3 = models.FileField(upload_to='Photo')
 
-    photo4 = models.FileField(upload_to='./static/Upload/Photo')
+    photo4 = models.FileField(upload_to='Photo')
 
-    photo5 = models.FileField(upload_to='./static/Upload/Photo')
+    photo5 = models.FileField(upload_to='Photo')
 
-    photo6 = models.FileField(upload_to='./static/Upload/Photo')
+    photo6 = models.FileField(upload_to='Photo')
 
-    photo7 = models.FileField(upload_to='./static/Upload/Photo')
+    photo7 = models.FileField(upload_to='Photo')
 
-    photo8 = models.FileField(upload_to='./static/Upload/Photo')
+    photo8 = models.FileField(upload_to='Photo')
 
     photo9 = models.FileField(upload_to='./static/Upload/Photo')
 
@@ -109,6 +109,8 @@ class Message(models.Model):
     type = models.CharField(max_length=5)
 
     isread = models.BooleanField(default=False)
+
+    sendid = models.CharField(max_length=5, null=False)
 
     def __unicode__(self):
         return str(self.id) + ' ' + str(self.userid) + ' ' + str(self.content) + ' ' + str(self.type)

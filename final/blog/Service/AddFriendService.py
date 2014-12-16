@@ -36,3 +36,4 @@ def addfriend(user_id, receiver_id):
         result = "fail"
 
     return result
+

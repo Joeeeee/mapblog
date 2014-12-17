@@ -5,11 +5,9 @@ __author__ = 'Joeeee'
 # Modules in my app
 from blog.Service import AddFriendService
 from auth import Httpsession
-<<<<<<< HEAD
 from blog.Service import UserService
-=======
+
 from blog.models import User
->>>>>>> c51d9958b3c55d2b5c76d2949846c24953be1c41
 
 
 # Modules in Django
@@ -57,7 +55,7 @@ def addfriend(request):
         # haven't been signed in
         return HttpResponse(json.dumps({"success": "0", "type": "1"}))
 
-<<<<<<< HEAD
+
 #user register
 @csrf_exempt
 def register(request):
@@ -78,7 +76,6 @@ def login(request):
         return render_to_response("RealMapBlog/index.html", {"success": "1"})
     else:
         return render_to_response("RealMapBlog/login.html", {"success": "0"})
-=======
 
 # class UserForm(forms.Form):
 #     headImg = forms.FileField()
@@ -105,4 +102,3 @@ def login(request):
 #     else:
 #         pass
 #     return HttpResponse("success")
->>>>>>> c51d9958b3c55d2b5c76d2949846c24953be1c41

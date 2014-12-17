@@ -12,13 +12,15 @@ django.setup()
 from blog.DAO import UserDAO
 
 
-def register_user(new_user):
+def register_user(**new_user):
     try:
-        u = UserDAO.add_user(**new_user)
+        u = UserDAO.new_user(**new_user)
+        return u
     except:
         return "error"
-    return u
 
+# result = register_user(phone="xuanlang",password = "zhuzhu")
+# print result
 
 def delete_user(user_id):
     try:

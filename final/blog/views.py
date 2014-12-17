@@ -5,11 +5,13 @@ __author__ = 'Joeeee'
 # Modules in my app
 from blog.Service import AddFriendService
 from auth import Httpsession
+from blog.Service import UserService
 
 
 # Modules in Django
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -47,3 +49,24 @@ def addfriend(request):
     else:
         # haven't been signed in
         return HttpResponse(json.dumps({"success": "0", "type": "1"}))
+
+#user register
+@csrf_exempt
+def register(request):
+    phone = request.POST['phone']
+    password = request.POST['password']
+    if Httpsession.UserRegister(phone,password):
+        result = UserService.register_user(phone=phone)
+        return render_to_response("RealMapBlog/login.html", {"success": "1"})
+    else:
+        return HttpResponse(json.dumps({"success": "0"}))
+
+
+@csrf_exempt
+def login(request):
+    phone = request.POST['phone']
+    password = request.POST['password']
+    if Httpsession.UserLogin(request,phone , password):
+        return render_to_response("RealMapBlog/index.html", {"success": "1"})
+    else:
+        return render_to_response("RealMapBlog/login.html", {"success": "0"})

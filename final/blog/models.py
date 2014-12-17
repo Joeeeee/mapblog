@@ -26,8 +26,8 @@ class User(models.Model):
     city = models.CharField(max_length=30, default="GUANGZHOUG")
 
     def __unicode__(self):
-        return str(self.id) + ' ' + str(self.username) + ' ' + str(self.userid) + ' ' + str(self.password) + ' ' + \
-               str(self.sex) + ' ' + str(self.head) + ' ' + str(self.nickname) + ' ' + \
+        return str(self.id) + ' ' + str(self.phone) + ' ' + str(self.info) + ' ' + str(self.password) + ' ' + \
+               str(self.sex) + ' '+str(self.age) + ' '+str(self.head) + ' ' + str(self.nickname) + ' ' + \
                str(self.last_longitude) + ' ' + str(self.last_latitude) + ' ' + str(self.city)
 
 

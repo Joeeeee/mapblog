@@ -12,7 +12,7 @@ from blog.models import User
 
 # basic operation
 def new_user(**user):
-    result = User.object.create(**user)
+    result = User.objects.create(**user)
     return result
 
 

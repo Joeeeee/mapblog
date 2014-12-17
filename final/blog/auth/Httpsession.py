@@ -10,7 +10,8 @@ __author__ = 'assiso'
 #
 #
 ####################################################
-
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "final.settings")
 
 
 
@@ -25,9 +26,12 @@ def UserRegister(usercode, password):
     try:
         user = User.objects.create_user(username=usercode, email='NULL', password=password)
         user.is_staff = True
-        return "Register Success"
+        return True
     except:
-        return "Register False"
+        return False
+
+# boolean = UserRegister("zhuzhu","zhurun")
+# print boolean
 
 #管理员注册
 def AdminRegister(self):
@@ -39,8 +43,9 @@ def UserLogin(request, usercode, password):
     user = auth.authenticate(username=usercode, password=password)
     if user is not None:
         auth.login(request, user)
-        print usercode + " Login Success"
-
+        return True
+    else:
+        return False
 
 #用户登出
 def UserLogoff(request):

@@ -90,10 +90,6 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 
-UPLOAD_PATH = os.path.join(STATIC_ROOT, 'Upload')
+# UPLOAD_PATH = os.path.join(STATIC_ROOT, 'Upload')
 
-STATICFILES_DIRS = (
-    ("Upload", os.path.join(STATIC_ROOT,'Upload')),
-    ("Photo", os.path.join(UPLOAD_PATH,'Photo')),
-    ("Head", os.path.join(UPLOAD_PATH,'Head')),
-)
+MEDIA_ROOT = '/Users/Joeeee/Documents/Git Space/mapblog/final/blog/Upload'

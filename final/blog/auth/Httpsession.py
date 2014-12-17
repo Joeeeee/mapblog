@@ -29,7 +29,6 @@ def UserRegister(usercode, password):
         return True
     except:
         return False
-
 # boolean = UserRegister("zhuzhu","zhurun")
 # print boolean
 

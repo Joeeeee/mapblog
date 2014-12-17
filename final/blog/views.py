@@ -4,9 +4,10 @@ __author__ = 'Joeeee'
 
 # Modules in my app
 from blog.Service import AddFriendService
+from blog.Service import BlogService
 from auth import Httpsession
 from blog.Service import UserService
-
+from blog.Utils import GenerateObject
 from blog.models import User
 
 
@@ -34,9 +35,15 @@ def helloworld(request):
     return render(request, "RealMapBlog/login.html")
 
 
+
+@csrf_exempt
+def login(request):
+    pass
+
+
 # send an add friend request
 @csrf_exempt
-def addfriend(request):
+def add_friend(request):
 
     if Httpsession.UserVerify(request):
         # suppose POST method
@@ -76,6 +83,113 @@ def login(request):
         return render_to_response("RealMapBlog/index.html", {"success": "1"})
     else:
         return render_to_response("RealMapBlog/login.html", {"success": "0"})
+
+
+@csrf_exempt
+def confirm_add_friend(request):
+
+    if Httpsession.UserVerify(request):
+
+        # get data
+        user_id = request.POST['user_id']
+        friend_id = request.POST['friend_id']
+        add_friend_id = request.POST['addfriend_id']
+        type = request.POST['type']
+
+
+
+
+
+@csrf_exempt
+def publish_blog(request):
+
+    if request.method == 'POST':
+
+        if Httpsession.UserVerify(request):
+
+            # get data
+            content = request.POST['content']
+            longitude = float(request.POST['longitude'])
+            latitude = float(request.POST['latitude'])
+            userid = request.POST['userid']
+
+            result = BlogService.newblog(userid, longitude, latitude, content)
+
+            if result is None:
+                return HttpResponse(json.dumps({"success": "0", "type": "0"}))
+
+            else:
+                return HttpResponse(json.dumps(GenerateObject.todcit(result)))
+
+
+@csrf_exempt
+def logoff(request):
+    pass
+
+
+@csrf_exempt
+def search_friend(request):
+    pass
+
+
+@csrf_exempt
+def get_friend_blog(request):
+    pass
+
+
+@csrf_exempt
+def get_add_friend_detail(request):
+    pass
+
+
+@csrf_exempt
+def delete_blog(request):
+    pass
+
+
+@csrf_exempt
+def delete_comment(request):
+    pass
+
+@csrf_exempt
+def delete_friend(request):
+    pass
+
+
+@csrf_exempt
+def edit_info(request):
+    pass
+
+
+@csrf_exempt
+def comment(request):
+    pass
+
+
+@csrf_exempt
+def register(request):
+    pass
+
+
+@csrf_exempt
+def refresh_friend_blog(request):
+    pass
+
+
+@csrf_exempt
+def setup_group(request):
+    pass
+
+
+@csrf_exempt
+def add_groupmember(request):
+    pass
+
+
+@csrf_exempt
+def delete_groupmember(request):
+    pass
+
 
 # class UserForm(forms.Form):
 #     headImg = forms.FileField()

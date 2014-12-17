@@ -16,7 +16,7 @@ def new_addfriend(**addfriend):
     return result
 
 
-def delete_comment(addfriend_id):
+def delete_addfriend(addfriend_id):
     Addfriend.object.get(id=addfriend_id).delete()
 
 

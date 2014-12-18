@@ -35,12 +35,6 @@ def helloworld(request):
     return render(request, "RealMapBlog/login.html")
 
 
-
-@csrf_exempt
-def login(request):
-    pass
-
-
 # send an add friend request
 @csrf_exempt
 def add_friend(request):
@@ -66,20 +60,28 @@ def add_friend(request):
 #user register
 @csrf_exempt
 def register(request):
-    phone = request.POST['phone']
-    password = request.POST['password']
-    if Httpsession.UserRegister(phone,password):
-        result = UserService.register_user(phone=phone)
-        return render_to_response("RealMapBlog/login.html", {"success": "1"})
-    else:
-        return HttpResponse(json.dumps({"success": "0"}))
+
+    if request.method == 'POST':
+
+        # get data
+        phone = request.POST['phone']
+        password = request.POST['password']
+        sex = request.POST['sex']
+        nickname = request.POST['nickname']
+
+        if Httpsession.UserRegister(phone, password):
+            result = UserService.register_user(phone=phone, sex=sex, nickname=nickname)
+
+            return render_to_response("RealMapBlog/login.html", {"success": "1"})
+        else:
+            return HttpResponse(json.dumps({"success": "0"}))
 
 
 @csrf_exempt
 def login(request):
     phone = request.POST['phone']
     password = request.POST['password']
-    if Httpsession.UserLogin(request,phone , password):
+    if Httpsession.UserLogin(request, phone, password):
         return render_to_response("RealMapBlog/index.html", {"success": "1"})
     else:
         return render_to_response("RealMapBlog/login.html", {"success": "0"})
@@ -95,8 +97,6 @@ def confirm_add_friend(request):
         friend_id = request.POST['friend_id']
         add_friend_id = request.POST['addfriend_id']
         type = request.POST['type']
-
-
 
 
 

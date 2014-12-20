@@ -18,24 +18,24 @@ def register_user(**new_user):
         return u
     except:
         return "error"
+    # u = UserDAO.new_user(**new_user)
 
-# result = register_user(phone="xuanlang",password = "zhuzhu")
-# print result
+# register_user(phone="xuanlang", password="zhuzhu", sex="female", nickname="zhuzhu")
+
 
 def delete_user(user_id):
     try:
-        UserDAO.deleteUser(user_id)
+        UserDAO.delete_user(user_id)
     except:
         return "error"
     return 'success'
 
 
 def get_user_by_id(user_id):
-    u = None
     try:
-        u = UserDAO.getUserById(user_id)
+        u = UserDAO.get_user_by_id(user_id)
     except:
-        pass
+        u = None
     return u
 
 

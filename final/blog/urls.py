@@ -7,8 +7,30 @@ from django.conf.urls import patterns, url
 
 from blog import views
 urlpatterns = patterns("",
-    url(r'^hello$',views.helloworld,name='helloworld'),
-    # url(r'^sign_in',views.sign_in,name='sign_in'),
+    # test for connect
+    url(r'^hello$', views.helloworld, name='helloworld'),
+
+    # user register
+    # POST
+    # phone, password, sex, nickname
+    url(r'^register', views.register, name='register'),
+
+    # user login
+    # POST
+    # phone, password
+    url(r'^login',views.login,name='login'),
+
+    # user send a addfriend request
+    # POST
+    # userid, receiver id
+    url(r'^addfriend',views.add_friend,name='addfriend'),
+
+    # user confirm an add friend request
+    # POST
+    # userid, friendid, type, addfirendid
+    url(r'^confirm',views.confirm_add_friend,name='confirm_add_friend'),
+
+    # # user upload head photo
     # url(r'^testfile',views.testfile,name='testfile'),
 
     )

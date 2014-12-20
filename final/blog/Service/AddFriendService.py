@@ -7,9 +7,7 @@ import datetime
 from blog.DAO import AddFriendDAO
 from blog.DAO import FriendDAO
 from blog.DAO import MessageDAO
-
-from blog.models import Addfriend
-from blog.models import Message
+from blog.DAO import UserDAO
 
 from django.db import IntegrityError
 from django.db import transaction
@@ -22,19 +20,23 @@ from django.db import transaction
 # user send an addfriend request
 def addfriend(user_id, receiver_id):
 
+    # get user
+    u = UserDAO.get_user_by_id(user_id)
+    r = UserDAO.get_user_by_id(receiver_id)
+
     # object create
-    new_friend = {"userid": user_id, "friendid": receiver_id, "datetime": datetime.datetime.now()}
-    addfriend_request = Addfriend.object.create(new_friend)
-    message = {"userid": receiver_id, "type": "3", "content": user_id + " wants to add you"}
-    addfriend_message = Message.objects.create(message)
+    new_friend = {"userid": u, "friendid": receiver_id, "datetime": datetime.datetime.now()}
+    # addfriend_request = Addfriend.object.create(new_friend)
+    message = {"userid": r, "type": "3", "content": u.nickname + " wants to add you"}
+    # addfriend_message = Message.objects.create(message)
 
     # object commit
     try:
         with transaction.atomic():
-            result = AddFriendDAO.new_addfriend(**addfriend_request)
+            result = AddFriendDAO.new_addfriend(**new_friend)
 
             # add receiver's message
-            MessageDAO.new_message(**addfriend_message)
+            MessageDAO.new_message(**message)
 
     except IntegrityError:
         result = "fail"
@@ -43,15 +45,23 @@ def addfriend(user_id, receiver_id):
 
 
 # user confirm his friend
-def confirm_addfriend(userid, friendid, addfriend_id, type):
+def confirm_addfriend(userid, friendid, addfriend_id, confirm_type):
+
+    u = UserDAO.get_user_by_id(userid)
+    f = UserDAO.get_user_by_id(friendid)
 
     # type = 1 represents agree to add
-    if type == "1":
-        friend = {"userid": userid, "friendid": friendid}
-        message = {"userid": friendid, "type": "4", "content": userid + " agree to add you"}
+    if confirm_type == "1":
+
+        # construct record
+        friend_user = {"userid": u, "friendid": friendid}
+        friend_friend = {"userid": f, "friendid": userid}
+        message = {"userid": f, "type": "4", "content": u.nickname + " agree to add you"}
+
         try:
             with transaction.atomic():
-                result = FriendDAO.new_friend(**friend)
+                result = FriendDAO.new_friend(**friend_user)
+                FriendDAO.new_friend(friend_friend)
                 AddFriendDAO.delete_addfriend(addfriend_id)
                 MessageDAO.new_message(**message)
 
@@ -62,7 +72,7 @@ def confirm_addfriend(userid, friendid, addfriend_id, type):
 
     # type = 2 represents refuse to add
     else:
-        message = {"userid": friendid, "type": "4", "content": userid + " refuse to add you"}
+        message = {"userid": f, "type": "4", "content": u.nickname + " refuse to add you"}
         try:
             with transaction.atomic():
                 AddFriendDAO.delete_addfriend(addfriend_id)

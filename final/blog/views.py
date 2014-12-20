@@ -8,7 +8,7 @@ from blog.Service import BlogService
 from auth import Httpsession
 from blog.Service import UserService
 from blog.Utils import GenerateObject
-from blog.models import User
+# from blog.models import User
 
 
 # Modules in Django
@@ -21,12 +21,10 @@ from django import forms
 # Module in Python
 import json
 
-'''
-实现简单的博客功能
-功能: 1、用户注册; 2、用户发博客; 3、用户查看自己发的博客;
-'''
 
-# Create your views here.
+'''
+Create your views here.
+'''
 
 
 # for test
@@ -35,34 +33,12 @@ def helloworld(request):
     return render(request, "RealMapBlog/login.html")
 
 
-# send an add friend request
-@csrf_exempt
-def add_friend(request):
-
-    if Httpsession.UserVerify(request):
-        # suppose POST method
-        # get data
-        user_id = request.POST['user_id']
-        receiver_id = request.POST['receiver_id']
-
-        result = AddFriendService.addfriend(user_id, receiver_id)
-
-        # only one kind of error, that is database error
-        if result == "fail":
-            return HttpResponse(json.dumps({"success": "0", "type": "0"}))
-        else:
-            return HttpResponse(json.dumps({"success": "1"}))
-    else:
-        # haven't been signed in
-        return HttpResponse(json.dumps({"success": "0", "type": "1"}))
-
-
 #user register
 @csrf_exempt
 def register(request):
 
     if request.method == 'POST':
-
+        # print request
         # get data
         phone = request.POST['phone']
         password = request.POST['password']
@@ -72,19 +48,55 @@ def register(request):
         if Httpsession.UserRegister(phone, password):
             result = UserService.register_user(phone=phone, sex=sex, nickname=nickname)
 
-            return render_to_response("RealMapBlog/login.html", {"success": "1"})
+            if result != "error":
+                # return render_to_response("RealMapBlog/login.html", {"success": "1"})
+                return HttpResponse(json.dumps({"success": "1"}))
+            else:
+                return HttpResponse(json.dumps({"success": "0", "type": "1"}))
+
         else:
-            return HttpResponse(json.dumps({"success": "0"}))
+            return HttpResponse(json.dumps({"success": "0", "type": "0"}))
 
 
 @csrf_exempt
 def login(request):
-    phone = request.POST['phone']
-    password = request.POST['password']
-    if Httpsession.UserLogin(request, phone, password):
-        return render_to_response("RealMapBlog/index.html", {"success": "1"})
+
+    if request.method == 'POST':
+
+        # get data
+        phone = request.POST['phone']
+        password = request.POST['password']
+
+        if Httpsession.UserLogin(request, phone, password):
+            # return render_to_response("RealMapBlog/index.html", {"success": "1"})
+            return HttpResponse(json.dumps({"success": "1"}))
+
+        else:
+            # return render_to_response("RealMapBlog/login.html", {"success": "0"})
+            return HttpResponse(json.dumps({"success": "0"}))
+
+
+# send an add friend request
+@csrf_exempt
+def add_friend(request):
+
+    if Httpsession.UserVerify(request):
+        # suppose POST method
+        # get data
+        user_id = request.POST['userid']
+        receiver_id = request.POST['friendid']
+
+        result = AddFriendService.addfriend(user_id, receiver_id)
+
+        # only one kind of error, that is database error
+        if result == "fail":
+            return HttpResponse(json.dumps({"success": "0", "type": "0"}))
+
+        else:
+            return HttpResponse(json.dumps({"success": "1"}))
     else:
-        return render_to_response("RealMapBlog/login.html", {"success": "0"})
+        # haven't been signed in
+        return HttpResponse(json.dumps({"success": "0", "type": "1"}))
 
 
 @csrf_exempt
@@ -93,10 +105,20 @@ def confirm_add_friend(request):
     if Httpsession.UserVerify(request):
 
         # get data
-        user_id = request.POST['user_id']
-        friend_id = request.POST['friend_id']
-        add_friend_id = request.POST['addfriend_id']
-        type = request.POST['type']
+        user_id = request.POST['userid']
+        friend_id = request.POST['friendid']
+        add_friend_id = request.POST['addfriendid']
+        confirm_type = request.POST['type']
+
+        result = AddFriendService.confirm_addfriend(user_id, friend_id, add_friend_id, confirm_type)
+
+        if result == "error":
+            return HttpResponse(json.dumps({"success": "0"}))
+
+        else:
+            # get friend's detail
+            friend = GenerateObject.todcit(UserService.get_user_by_id(friend_id))
+            return HttpResponse(json.dumps({"success": "1", "friend": friend}))
 
 
 
@@ -167,11 +189,6 @@ def comment(request):
 
 
 @csrf_exempt
-def register(request):
-    pass
-
-
-@csrf_exempt
 def refresh_friend_blog(request):
     pass
 
@@ -216,3 +233,5 @@ def delete_groupmember(request):
 #     else:
 #         pass
 #     return HttpResponse("success")
+
+# print GenerateObject.todcit(UserService.get_user_by_id(13))

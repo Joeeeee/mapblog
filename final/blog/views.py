@@ -32,6 +32,10 @@ Create your views here.
 def helloworld(request):
     return render(request, "RealMapBlog/login.html")
 
+@csrf_exempt
+def main(request):
+    return render(request, "RealMapBlog/index.html")
+
 
 #user register
 @csrf_exempt

@@ -10,6 +10,9 @@ urlpatterns = patterns("",
     # test for connect
     url(r'^hello$', views.helloworld, name='helloworld'),
 
+    # test for main page
+    url(r'^main$', views.main, name='main'),
+
     # user register
     # POST
     # phone, password, sex, nickname

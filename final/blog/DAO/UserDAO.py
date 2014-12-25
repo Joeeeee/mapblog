@@ -25,7 +25,7 @@ def get_user_by_id(user_id):
 
 
 def get_user_by_phone(user_phone):
-    return User.objects.get(userid=user_phone)
+    return User.objects.get(phone=user_phone)
 
 
 def update_user(**kw):

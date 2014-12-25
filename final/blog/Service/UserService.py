@@ -30,18 +30,27 @@ def search_user(phone):
 
     try:
         user = UserDAO.get_user_by_phone(phone)
-    except Error:
+    except:
         return None
 
+    # fix data, pop useless data
+    u = GenerateObject.todcit(user)
+    u.pop("last_longitude")
+    u.pop("last_latitude")
+    u.pop("head")
+    u.pop("password")
+
+    # get userid
     userid = user.id
+
     try:
         blog = BlogDAO.get_blog_by_userid(userid)
 
         # if this user has no blog
         if len(blog) == 0:
-            return GenerateObject.todcit(user)
-    except Error:
-        return GenerateObject.todcit(user)
+            return u
+    except:
+        return u
 
     # return the latest blog
     result_blog = []
@@ -51,10 +60,17 @@ def search_user(phone):
     result_blog.sort(lambda x, y: cmp(x.datetime, y.datetime))
 
     # change result_blog into dict type and remove userid attr, 'cause user already have it
-    r = GenerateObject.todcit(result_blog[1])
-    r.pop("userid")
+    r = GenerateObject.todcit(result_blog[0])
 
-    final_result = {"user": GenerateObject.todcit(user), "blog": r}
+    # pop useless data
+    r.pop("userid")
+    r.pop("photoid")
+
+    # fix latitude and longitude decimal problem
+    r['longitude'] = str(r['longitude'])
+    r['latitude'] = str(r['latitude'])
+
+    final_result = {"user": u, "blog": r}
     return final_result
 
 
@@ -85,7 +101,7 @@ def update_user_info(user):
 def validate_user_by_phone(phone, password):
     try:
         user = UserDAO.get_user_by_phone(phone)
-    except Error:
+    except:
         return "error"
 
     if user.password == password:

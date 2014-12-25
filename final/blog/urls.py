@@ -22,22 +22,27 @@ urlpatterns = patterns("",
     # user login
     # POST
     # phone, password
-    url(r'^login', views.login,name='login'),
+    url(r'^login', views.login, name='login'),
 
     # user send a addfriend request
     # POST
     # userid, receiver id
-    url(r'^addfriend', views.add_friend,name='addfriend'),
+    url(r'^addfriend', views.add_friend, name='addfriend'),
 
     # user confirm an add friend request
     # POST
     # userid, friendid, type, addfirendid
-    url(r'^confirm', views.confirm_add_friend,name='confirm_add_friend'),
+    url(r'^confirm', views.confirm_add_friend, name='confirm_add_friend'),
 
     # user publish a blog
     # POST
     # content, longitude, latitude, userid
-    url(r'^publish', views.publish_blog,name='publish_blog'),
+    url(r'^publish', views.publish_blog, name='publish_blog'),
+
+    # user search users
+    # POST
+    # phone
+    url(r'^search', views.search_user, name='search_user'),
 
     # # user upload head photo
     # url(r'^testfile',views.testfile,name='testfile'),

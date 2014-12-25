@@ -42,7 +42,7 @@ def addfriend(user_id, receiver_id):
             # add receiver's message
             MessageDAO.new_message(**message)
 
-    except IntegrityError:
+    except:
         result = "fail"
 
     return result
@@ -74,7 +74,7 @@ def confirm_addfriend(userid, friendid, addfriend_id, confirm_type):
                 AddFriendDAO.delete_addfriend(addfriend_id)
                 MessageDAO.new_message(**message)
 
-        except IntegrityError:
+        except:
             result = "error"
 
         return result
@@ -87,7 +87,7 @@ def confirm_addfriend(userid, friendid, addfriend_id, confirm_type):
                 AddFriendDAO.delete_addfriend(addfriend_id)
                 MessageDAO.new_message(**message)
 
-        except IntegrityError:
+        except:
             result = "error"
 
         return result

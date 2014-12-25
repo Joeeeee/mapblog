@@ -26,8 +26,3 @@ def todcit(model_obj):
 
     return d
 
-# from blog.Service import UserService
-# from blog.DAO import UserDAO
-# from blog.models import User
-#
-# print todcit(UserDAO.get_user_by_id(13))

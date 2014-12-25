@@ -2,8 +2,9 @@
 __author__ = 'Joeeee'
 
 from django.db import transaction
+from django.db.transaction import DatabaseError
 from django.db import IntegrityError
-from blog.models import Blog
+from blog.DAO import UserDAO
 from blog.DAO import BlogDAO
 
 import datetime
@@ -12,9 +13,15 @@ import datetime
 # user publish a new blog
 def newblog(userid, content, longitude, latitude):
 
+    # get user instance by userid, then use to blog foreign key
+    try:
+        u = UserDAO.get_user_by_id(userid)
+    except DatabaseError:
+        return None
+
     # object create
-    new_blog = {"content": content, "logitude": longitude, "latitude": latitude, "datetime": datetime.datetime.now(),
-                "userid": userid}
+    new_blog = {"content": content, "longitude": longitude, "latitude": latitude, "datetime": datetime.datetime.now(),
+                "userid": u}
 
     try:
         result = BlogDAO.insert_blog(**new_blog)

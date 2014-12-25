@@ -49,7 +49,7 @@ def UserLogin(request, usercode, password):
 #用户登出
 def UserLogoff(request):
     auth.logout(request)
-    return "Logoff Success"
+    return True
 
 #检测用户是否登陆
 def UserVerify(request):

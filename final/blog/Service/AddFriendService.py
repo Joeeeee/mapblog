@@ -20,9 +20,13 @@ from django.db import transaction
 # user send an addfriend request
 def addfriend(user_id, receiver_id):
 
-    # get user
-    u = UserDAO.get_user_by_id(user_id)
-    r = UserDAO.get_user_by_id(receiver_id)
+    try:
+        with transaction.atomic():
+            # get user
+            u = UserDAO.get_user_by_id(user_id)
+            r = UserDAO.get_user_by_id(receiver_id)
+    except:
+        return "fail"
 
     # object create
     new_friend = {"userid": u, "friendid": receiver_id, "datetime": datetime.datetime.now()}
@@ -47,8 +51,13 @@ def addfriend(user_id, receiver_id):
 # user confirm his friend
 def confirm_addfriend(userid, friendid, addfriend_id, confirm_type):
 
-    u = UserDAO.get_user_by_id(userid)
-    f = UserDAO.get_user_by_id(friendid)
+    try:
+        with transaction.atomic():
+            # get user
+            u = UserDAO.get_user_by_id(userid)
+            f = UserDAO.get_user_by_id(friendid)
+    except:
+        return "fail"
 
     # type = 1 represents agree to add
     if confirm_type == "1":

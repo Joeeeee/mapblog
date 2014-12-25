@@ -77,7 +77,7 @@ class Blog(models.Model):
 
     def __unicode__(self):
         return str(self.id) + ' ' + str(self.content) + ' ' + str(self.latitude) + ' ' + str(self.longitude) + ' ' + \
-               str(self.time) + ' ' + str(self.blog_comment_count) + ' ' + str(self.blog_like_count) + ' ' + \
+               str(self.datetime) + ' ' + str(self.blog_comment_count) + ' ' + str(self.blog_like_count) + ' ' + \
                str(self.userid) + ' ' + str(self.photoid)
 
 

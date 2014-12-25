@@ -25,5 +25,10 @@ def get_blog(blog_id):
     return result
 
 
+def get_blog_by_userid(userid):
+    result = Blog.objects.filter(userid=userid)
+    return result
+
+
 def update_blog(**blog):
     Blog.objects.filter(id=blog['id']).update(**blog)

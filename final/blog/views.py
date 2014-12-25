@@ -14,9 +14,8 @@ from blog.Utils import GenerateObject
 # Modules in Django
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
-from django import forms
+# from django import forms
 
 # Module in Python
 import json
@@ -37,7 +36,7 @@ def main(request):
     return render(request, "RealMapBlog/index.html")
 
 
-#user register
+# user register
 @csrf_exempt
 def register(request):
 
@@ -46,11 +45,10 @@ def register(request):
         # get data
         phone = request.POST['phone']
         password = request.POST['password']
-        sex = request.POST['sex']
         nickname = request.POST['nickname']
 
         if Httpsession.UserRegister(phone, password):
-            result = UserService.register_user(phone=phone, sex=sex, nickname=nickname)
+            result = UserService.register_user(phone=phone, sex="male", nickname=nickname)
 
             if result != "error":
                 # return render_to_response("RealMapBlog/login.html", {"success": "1"})
@@ -80,6 +78,22 @@ def login(request):
             return HttpResponse(json.dumps({"success": "0"}))
 
 
+@csrf_exempt
+def logoff(request):
+
+    if request.method == 'POST':
+
+        # can log off only if user is log in
+        if Httpsession.UserVerify(request):
+
+            Httpsession.UserLogoff(request)
+
+            return render(request, "RealMapBlog/login.html")
+    else:
+        # when user is not log in
+        return HttpResponse(json.dumps({"success": "0"}))
+
+
 # send an add friend request
 @csrf_exempt
 def add_friend(request):
@@ -103,6 +117,7 @@ def add_friend(request):
         return HttpResponse(json.dumps({"success": "0", "type": "1"}))
 
 
+# confirm add friend request
 @csrf_exempt
 def confirm_add_friend(request):
 
@@ -117,12 +132,14 @@ def confirm_add_friend(request):
         result = AddFriendService.confirm_addfriend(user_id, friend_id, add_friend_id, confirm_type)
 
         if result == "error":
-            return HttpResponse(json.dumps({"success": "0"}))
+            return HttpResponse(json.dumps({"success": "0", "type": "0"}))
 
         else:
             # get friend's detail
             friend = GenerateObject.todcit(UserService.get_user_by_id(friend_id))
             return HttpResponse(json.dumps({"success": "1", "friend": friend}))
+    else:
+        return HttpResponse(json.dumps({"success": "0", "type": "1"}))
 
 
 
@@ -139,37 +156,67 @@ def publish_blog(request):
             latitude = float(request.POST['latitude'])
             userid = request.POST['userid']
 
-            result = BlogService.newblog(userid, longitude, latitude, content)
+            # call service
+            result = BlogService.newblog(userid, content, float(longitude), float(latitude))
 
+            # judge result
             if result is None:
                 return HttpResponse(json.dumps({"success": "0", "type": "0"}))
 
             else:
                 return HttpResponse(json.dumps(GenerateObject.todcit(result)))
+                # print result
+                # return HttpResponse(json.dumps({"success": "1"}))
+        else:
+            return HttpResponse(json.dumps({"success": "0", "type": "1"}))
 
 
 @csrf_exempt
-def logoff(request):
+def comment(request):
     pass
 
 
 @csrf_exempt
-def search_friend(request):
-    pass
-
-
-@csrf_exempt
-def get_friend_blog(request):
-    pass
-
-
-@csrf_exempt
-def get_add_friend_detail(request):
+def refresh_friend_blog(request):
     pass
 
 
 @csrf_exempt
 def delete_blog(request):
+    pass
+
+
+@csrf_exempt
+def search_user(request):
+    # logic: search user by phone, if user is existed, return his info and the user's one latest blog, latitude and
+    # longitude should show in capital size
+
+    if request.method == 'POST':
+
+        if Httpsession.UserVerify(request):
+
+            phone = request.POST['phone']
+
+            result = UserService.search_user(phone)
+
+            # user does not existed
+            if result is None:
+                return HttpResponse(json.dumps({"success": "0", "type": "0"}))
+
+            # user is existed
+            else:
+                return HttpResponse(json.dumps({"success": "1", "result": result}))
+
+        else:
+            return HttpResponse(json.dumps({"success": "0", "type": "1"}))
+
+@csrf_exempt
+def view_friend_blog(request):
+    pass
+
+
+@csrf_exempt
+def view_add_friend_detail(request):
     pass
 
 
@@ -184,16 +231,6 @@ def delete_friend(request):
 
 @csrf_exempt
 def edit_info(request):
-    pass
-
-
-@csrf_exempt
-def comment(request):
-    pass
-
-
-@csrf_exempt
-def refresh_friend_blog(request):
     pass
 
 

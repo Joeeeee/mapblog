@@ -18,10 +18,10 @@
 				z-index: 0;
 			}
 			
-			div#content {position: absolute; 
+			.content {position: absolute;
 						background-color:#FFFFFC; 
-						height:350px%;
-						width:25%; 
+						height:140px;
+						width:320px;
 						/*right:200px; 
 						top:200px; */
 						top: 16%;
@@ -36,7 +36,7 @@
 
 	<body style="background-color: #899095;">
 		<img class="bg" src="{% static 'img/logingrey3.png' %}" />
-		<div id="content">
+		<div id="login" class="content">
 			<form action="/blog/sign_in" method="post" enctype="multipart/form-data" name="login">
 				{%csrf_token%}
 				<table style="background-color: CEF0FB;">
@@ -67,7 +67,7 @@
 
 		</div>
 		
-		<div id="content" style="margin-top: 13%; height: 260px;">
+		<div id="register" class="content" style="margin-top: 13%; height: 260px;">
 			<form action="/blog/sign_in" method="post" enctype="multipart/form-data" name="login">
 				{%csrf_token%}
 				<table style="background-color: CEF0FB;">
